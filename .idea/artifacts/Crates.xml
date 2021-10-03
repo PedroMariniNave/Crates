@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Crates">
+    <output-path>$USER_HOME$/Desktop/Rankup 3.0 Testes/plugins</output-path>
+    <root id="archive" name="Crates.jar">
+      <element id="module-output" name="Crates [Rankup Overpower]" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/item-nbt-api-plugin-2.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/xyz/xenondevs/particle/1.6.3/particle-1.6.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
