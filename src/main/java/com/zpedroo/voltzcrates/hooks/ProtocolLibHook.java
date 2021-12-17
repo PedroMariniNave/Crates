@@ -10,10 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProtocolLibHook extends PacketAdapter {
 
@@ -25,7 +22,7 @@ public class ProtocolLibHook extends PacketAdapter {
 
     public void onPacketReceiving(PacketEvent event) {
         Player player = event.getPlayer();
-        Block block = player.getTargetBlock(null, 15);
+        Block block = player.getTargetBlock((HashSet<Byte>) null, 15);
         Location location = block.getLocation();
 
         PlacedCrate crate = CrateManager.getInstance().getPlacedCrate(location);

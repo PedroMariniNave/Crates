@@ -15,7 +15,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerGeneralListeners implements Listener {
@@ -32,8 +31,8 @@ public class PlayerGeneralListeners implements Listener {
         event.setCancelled(true);
 
         Player player = event.getPlayer();
-        ItemStack item = event.getHand() == EquipmentSlot.HAND ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
-        if (item.getType().equals(Material.AIR)) {
+        ItemStack item = event.getItem();
+        if (item == null || item.getType().equals(Material.AIR)) {
             player.sendMessage(Messages.NEED_KEY);
             return;
         }
@@ -73,7 +72,7 @@ public class PlayerGeneralListeners implements Listener {
         for (ItemStack item : player.getInventory().getContents()) {
             if (item == null || !item.isSimilar(toTake)) continue;
 
-            if (item.getAmount() >= remaining) {
+            if (item.getAmount() > remaining) {
                 item.setAmount(item.getAmount() - remaining);
                 break;
             }
@@ -81,5 +80,7 @@ public class PlayerGeneralListeners implements Listener {
             remaining -= item.getAmount();
             player.getInventory().removeItem(item);
         }
+
+        player.updateInventory();
     }
 }

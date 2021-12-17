@@ -16,6 +16,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashSet;
+
 public class CratesCmd implements CommandExecutor {
 
     @Override
@@ -26,7 +28,7 @@ public class CratesCmd implements CommandExecutor {
                 case "REMOVE":
                     if (player == null) return true;
 
-                    Block block = player.getTargetBlock(null, 5);
+                    Block block = player.getTargetBlock((HashSet<Byte>) null, 5);
                     if (block.getType().equals(Material.AIR)) {
                         player.sendMessage(Messages.NULL_BLOCK);
                         return true;
@@ -48,7 +50,7 @@ public class CratesCmd implements CommandExecutor {
                 case "SET":
                     if (player == null) return true;
 
-                    Block block = player.getTargetBlock(null, 5);
+                    Block block = player.getTargetBlock((HashSet<Byte>) null, 5);
                     if (block.getType().equals(Material.AIR)) {
                         player.sendMessage(Messages.NULL_BLOCK);
                         return true;
@@ -116,8 +118,6 @@ public class CratesCmd implements CommandExecutor {
         }
 
         for (String msg : Messages.COMMAND_USAGE) {
-            if (msg == null) continue;
-
             sender.sendMessage(StringUtils.replaceEach(msg, new String[]{
                     "{cmd}"
             }, new String[]{

@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryManager {
 
-    public static Integer getFreeSpace(Player player, ItemStack item) {
+    public static int getFreeSpace(Player player, ItemStack item) {
         int free = 0;
 
         for (int slot = 0; slot < 36; ++slot) {

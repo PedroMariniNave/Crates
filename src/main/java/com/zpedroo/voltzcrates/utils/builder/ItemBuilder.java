@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -33,7 +32,7 @@ public class ItemBuilder {
     private Field metaProfileField;
 
     public ItemBuilder(Material material, int amount, short durability) {
-        if (StringUtils.equals(material.toString(), "PLAYER_HEAD")) {
+        if (StringUtils.equals(material.toString(), "SKULL_ITEM")) {
             this.item = new ItemStack(material, amount, (short) 3);
         } else {
             this.item = new ItemStack(material, amount, durability);
@@ -104,10 +103,6 @@ public class ItemBuilder {
             }
         }
 
-        if (file.contains(where + ".custom-model-data")) {
-            builder.setCustomModelData(file.getInt(where + ".custom-model-data"));
-        }
-
         if (file.contains(where + ".hide-attributes") && file.getBoolean(where + ".hide-attributes")) {
             builder.hideAttributes();
         }
@@ -169,14 +164,6 @@ public class ItemBuilder {
         item.setItemMeta(meta);
     }
 
-    private void setCustomModelData(Integer value) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-
-        meta.setCustomModelData(value);
-        item.setItemMeta(meta);
-    }
-
     private void addPotion(String type, int duration, int amplifier) {
         PotionMeta meta = (PotionMeta) item.getItemMeta();
         if (meta == null) return;
@@ -190,13 +177,14 @@ public class ItemBuilder {
 
         PotionType potionType = PotionType.getByEffect(potionEffectType);
         if (potionType != null) {
-            meta.setBasePotionData(new PotionData(potionType, true, false));
+            meta.addCustomEffect(potionEffect, true);
         }
+        
         item.setItemMeta(meta);
     }
 
     private void setSkullOwner(String owner) {
-        if (!StringUtils.contains(item.getType().toString(), "PLAYER_HEAD")) return;
+        if (!StringUtils.contains(item.getType().toString(), "SKULL_ITEM")) return;
         if (owner == null || owner.isEmpty()) return;
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
@@ -207,7 +195,7 @@ public class ItemBuilder {
     }
 
     private void setCustomTexture(String base64) {
-        if (!StringUtils.contains(item.getType().toString(), "PLAYER_HEAD")) return;
+        if (!StringUtils.contains(item.getType().toString(), "SKULL_ITEM")) return;
         if (base64 == null || base64.isEmpty()) return;
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();

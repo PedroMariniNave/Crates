@@ -8,14 +8,14 @@ import com.zpedroo.voltzcrates.objects.Reward;
 import com.zpedroo.voltzcrates.utils.builder.ItemBuilder;
 import com.zpedroo.voltzcrates.utils.config.Messages;
 import com.zpedroo.voltzcrates.utils.config.Titles;
-import net.minecraft.server.v1_16_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R3.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -64,8 +64,6 @@ public class CrateManager {
                     }
 
                     for (String cmd : reward.getCommands()) {
-                        if (cmd == null) continue;
-
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), StringUtils.replaceEach(cmd, new String[]{
                                 "{player}"
                         }, new String[]{
@@ -86,7 +84,7 @@ public class CrateManager {
 
         if (cancelled) {
             player.getInventory().addItem(placedCrate.getCrate().getKey());
-            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1f, 1f);
+            player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1f, 1f);
             return;
         }
 
@@ -140,8 +138,6 @@ public class CrateManager {
         if (files == null) return;
 
         for (File file : files) {
-            if (file == null) continue;
-
             FileConfiguration fileConfig = YamlConfiguration.loadConfiguration(file);
 
             String name = file.getName().replace(".yml", "");
@@ -165,7 +161,7 @@ public class CrateManager {
 
             if (rewards.isEmpty()) continue;
 
-            Crate crate = new Crate(file, name, key, hologramLines.toArray(new String[8]), rewards);
+            Crate crate = new Crate(file, name, key, hologramLines.toArray(new String[1]), rewards);
             cache(crate);
 
             for (String serializedLocation : fileConfig.getStringList("Locations")) {
@@ -192,7 +188,7 @@ public class CrateManager {
 
         int data = open ? 1 : 0;
         craftWorld.getHandle().playBlockAction(new BlockPosition(location.getX(), location.getY(), location.getZ()), CraftMagicNumbers.getBlock(block.getType()), 1, data);
-        location.getWorld().playSound(location, Sound.BLOCK_ENDER_CHEST_OPEN, 0.1f, 100f);
+        location.getWorld().playSound(location, Sound.CHEST_OPEN, 0.1f, 100f);
 
         if (openChestTask.containsKey(block)) {
             openChestTask.get(block).cancel();
@@ -204,7 +200,7 @@ public class CrateManager {
             @Override
             public void run() {
                 changeChestState(location, false);
-                location.getWorld().playSound(location, Sound.BLOCK_ENDER_CHEST_CLOSE, 0.1f, 100f);
+                location.getWorld().playSound(location, Sound.CHEST_CLOSE, 0.1f, 100f);
             }
         }.runTaskLater(VoltzCrates.get(), 20L * 2));
     }
