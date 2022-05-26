@@ -7,7 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Crates [Rankup Overpower]" />
+<<<<<<< HEAD
         <module name="Crates-master" />
+=======
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
       </profile>
     </annotationProcessing>
   </component>

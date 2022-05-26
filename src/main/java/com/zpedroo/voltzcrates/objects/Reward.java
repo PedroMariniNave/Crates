@@ -6,7 +6,11 @@ import java.util.List;
 
 public class Reward {
 
+<<<<<<< HEAD
     private double chance;
+=======
+    private Double chance;
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
     private ItemStack display;
     private ItemStack itemToGive;
     private List<String> commands;

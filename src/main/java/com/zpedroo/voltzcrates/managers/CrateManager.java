@@ -151,7 +151,11 @@ public class CrateManager {
             List<Reward> rewards = new ArrayList<>(4);
 
             for (String rewardName : fileConfig.getConfigurationSection("Rewards").getKeys(false)) {
+<<<<<<< HEAD
                 double chance = fileConfig.getDouble("Rewards." + rewardName + ".chance", 0);
+=======
+                Double chance = fileConfig.getDouble("Rewards." + rewardName + ".chance", 0);
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
                 ItemStack display = ItemBuilder.build(fileConfig, "Rewards." + rewardName + ".display").build();
                 ItemStack itemToGive = fileConfig.contains("Rewards." + rewardName + ".to-give") ? ItemBuilder.build(fileConfig, "Rewards." + rewardName + ".to-give").build() : null;
                 List<String> commands = fileConfig.getStringList("Rewards." + rewardName + ".commands");

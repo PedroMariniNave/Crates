@@ -10,11 +10,20 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+<<<<<<< HEAD
 import org.bukkit.inventory.meta.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
+=======
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -25,9 +34,18 @@ import java.util.UUID;
 
 public class ItemBuilder {
 
+<<<<<<< HEAD
     private final ItemStack item;
 
     public ItemBuilder(@NotNull Material material, int amount, short durability) {
+=======
+    private ItemStack item;
+
+    private Method metaSetProfileMethod;
+    private Field metaProfileField;
+
+    public ItemBuilder(Material material, int amount, short durability) {
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
         if (StringUtils.equals(material.toString(), "SKULL_ITEM")) {
             this.item = new ItemStack(material, amount, (short) 3);
         } else {
@@ -35,14 +53,18 @@ public class ItemBuilder {
         }
     }
 
+<<<<<<< HEAD
     public ItemBuilder(@NotNull ItemStack item) {
         this.item = item;
     }
 
+=======
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
     public static ItemBuilder build(FileConfiguration file, String where) {
         return build(file, where, null, null);
     }
 
+<<<<<<< HEAD
     public static ItemBuilder build(FileConfiguration file, String where, String[] placeholders, String[] replacers) {
         String type = StringUtils.replaceEach(file.getString(where + ".type"), placeholders, replacers);
         short data = (short) file.getInt(where + ".data", 0);
@@ -50,23 +72,44 @@ public class ItemBuilder {
 
         Material material = Material.getMaterial(type);
         Validate.notNull(material, "Material cannot be null! Check your item configs. Invalid material: " + type);
+=======
+    public static ItemBuilder build(FileConfiguration file, String where, String[] placeholders, String[] replaces) {
+        String type = StringUtils.replace(file.getString(where + ".type"), " ", "").toUpperCase();
+        short data = (short) (file.contains(where + ".data") ? file.getInt(where + ".data") : 0);
+        int amount = file.getInt(where + ".amount", 1);
+
+        Material material = Material.getMaterial(StringUtils.replaceEach(type, placeholders, replaces));
+        Validate.notNull(material, "Material cannot be null! Check your item configs.");
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
 
         ItemBuilder builder = new ItemBuilder(material, amount, data);
 
         if (file.contains(where + ".name")) {
             String name = ChatColor.translateAlternateColorCodes('&', file.getString(where + ".name"));
+<<<<<<< HEAD
             builder.setName(StringUtils.replaceEach(name, placeholders, replacers));
         }
 
         if (file.contains(where + ".lore")) {
             builder.setLore(file.getStringList(where + ".lore"), placeholders, replacers);
+=======
+            builder.setName(StringUtils.replaceEach(name, placeholders, replaces));
+        }
+
+        if (file.contains(where + ".lore")) {
+            builder.setLore(file.getStringList(where + ".lore"), placeholders, replaces);
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
         }
 
         if (file.contains(where + ".owner")) {
             String owner = file.getString(where + ".owner");
 
             if (owner.length() <= 16) {
+<<<<<<< HEAD
                 builder.setSkullOwner(StringUtils.replaceEach(owner, placeholders, replacers));
+=======
+                builder.setSkullOwner(StringUtils.replaceEach(owner, placeholders, replaces));
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
             } else {
                 builder.setCustomTexture(owner);
             }
@@ -107,6 +150,7 @@ public class ItemBuilder {
             builder.hideAttributes();
         }
 
+<<<<<<< HEAD
         if (file.contains(where + ".hide-enchants") && file.getBoolean(where + ".hide-enchants")) {
             builder.hideEnchants();
         }
@@ -126,6 +170,22 @@ public class ItemBuilder {
     public ItemBuilder setLore(List<String> lore, String[] placeholders, String[] replacers) {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return this;
+=======
+        return builder;
+    }
+
+    private void setName(String name) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        item.setItemMeta(meta);
+    }
+
+    private void setLore(List<String> lore, String[] placeholders, String[] replacers) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
 
         List<String> newLore = new ArrayList<>(lore.size());
 
@@ -135,6 +195,7 @@ public class ItemBuilder {
 
         meta.setLore(newLore);
         item.setItemMeta(meta);
+<<<<<<< HEAD
         return this;
     }
 
@@ -164,6 +225,48 @@ public class ItemBuilder {
 
         PotionEffectType potionEffectType = PotionEffectType.getByName(type);
         if (potionEffectType == null) return this;
+=======
+    }
+
+    private void addEnchantment(Enchantment enchantment) {
+        addEnchantment(enchantment, 1);
+    }
+
+    private void addEnchantment(Enchantment enchantment, int level) {
+        if (enchantment == null) return;
+
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+
+        meta.addEnchant(enchantment, level, true);
+        item.setItemMeta(meta);
+    }
+
+    private void setGlow() {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
+    }
+
+    private void hideAttributes() {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+    }
+
+    private void addPotion(String type, int duration, int amplifier) {
+        PotionMeta meta = (PotionMeta) item.getItemMeta();
+        if (meta == null) return;
+
+        PotionEffectType potionEffectType = PotionEffectType.getByName(type);
+        if (potionEffectType == null) return;
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
 
         PotionEffect potionEffect = new PotionEffect(potionEffectType, duration, amplifier);
 
@@ -173,6 +276,7 @@ public class ItemBuilder {
         if (potionType != null) {
             meta.addCustomEffect(potionEffect, true);
         }
+<<<<<<< HEAD
 
         item.setItemMeta(meta);
         return this;
@@ -220,10 +324,31 @@ public class ItemBuilder {
 
     public ItemBuilder setCustomTexture(String base64) {
         if (base64 == null || base64.isEmpty()) return this;
+=======
+        
+        item.setItemMeta(meta);
+    }
+
+    private void setSkullOwner(String owner) {
+        if (!StringUtils.contains(item.getType().toString(), "SKULL_ITEM")) return;
+        if (owner == null || owner.isEmpty()) return;
+
+        SkullMeta meta = (SkullMeta) item.getItemMeta();
+        if (meta == null) return;
+
+        meta.setOwner(owner);
+        item.setItemMeta(meta);
+    }
+
+    private void setCustomTexture(String base64) {
+        if (!StringUtils.contains(item.getType().toString(), "SKULL_ITEM")) return;
+        if (base64 == null || base64.isEmpty()) return;
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         setCustomTexture(meta, base64);
         item.setItemMeta(meta);
+<<<<<<< HEAD
         return this;
     }
 
@@ -237,16 +362,45 @@ public class ItemBuilder {
                 Field metaProfileField = meta.getClass().getDeclaredField("profile");
                 metaProfileField.setAccessible(true);
                 metaProfileField.set(meta, createProfile(base64));
+=======
+    }
+
+    private void setCustomTexture(SkullMeta meta, String base64) {
+        try {
+            if (metaSetProfileMethod == null) {
+                metaSetProfileMethod = meta.getClass().getDeclaredMethod("setProfile", GameProfile.class);
+                metaSetProfileMethod.setAccessible(true);
+            }
+            metaSetProfileMethod.invoke(meta, createProfile(base64));
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
+            try {
+                if (metaProfileField == null) {
+                    metaProfileField = meta.getClass().getDeclaredField("profile");
+                    metaProfileField.setAccessible(true);
+                }
+                metaProfileField.set(meta, createProfile(base64));
+
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
             } catch (NoSuchFieldException | IllegalAccessException ex2) {
                 ex2.printStackTrace();
             }
         }
+<<<<<<< HEAD
 
         return this;
     }
 
     private GameProfile createProfile(String base64) {
         UUID uuid = new UUID(base64.substring(base64.length() - 20).hashCode(), base64.substring(base64.length() - 10).hashCode());
+=======
+    }
+
+    private GameProfile createProfile(String base64) {
+        UUID uuid = new UUID(
+                base64.substring(base64.length() - 20).hashCode(),
+                base64.substring(base64.length() - 10).hashCode()
+        );
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
         GameProfile profile = new GameProfile(uuid, "Player");
         profile.getProperties().put("textures", new Property("textures", base64));
 

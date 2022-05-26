@@ -26,8 +26,11 @@ public class Messages {
 
     public static final String NEED_SPACE = getColored(FileUtils.get().getString(FileUtils.Files.CONFIG, "Messages.need-space"));
 
+<<<<<<< HEAD
     public static final String GIVE_ALL = getColored(FileUtils.get().getString(FileUtils.Files.CONFIG, "Messages.give-all"));
 
+=======
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
     private static String getColored(String str) {
         return ChatColor.translateAlternateColorCodes('&', str);
     }

@@ -1,11 +1,19 @@
 <component name="libraryTable">
   <library name="spigot-1.8.8-R0.1-SNAPSHOT-latest">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$PROJECT_DIR$/src/main/resources/libraries/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/src/main/resources/libraries/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+=======
+      <root url="jar://$USER_HOME$/Downloads/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Downloads/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
     </SOURCES>
   </library>
 </component>

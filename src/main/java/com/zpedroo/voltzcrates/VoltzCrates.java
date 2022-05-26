@@ -34,8 +34,13 @@ public class VoltzCrates extends JavaPlugin {
 
         ProtocolLibrary.getProtocolManager().addPacketListener(new ProtocolLibHook(this, PacketType.Play.Client.LOOK));
 
+<<<<<<< HEAD
         registerListeners();
         registerCommand(COMMAND, ALIASES, PERMISSION, PERMISSION_MESSAGE, new CratesCmd());
+=======
+        registerCommand(COMMAND, ALIASES, PERMISSION, PERMISSION_MESSAGE, new CratesCmd());
+        registerListeners();
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
     }
 
     public void onDisable() {
@@ -46,11 +51,14 @@ public class VoltzCrates extends JavaPlugin {
         });
     }
 
+<<<<<<< HEAD
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerGeneralListeners(), this);
         getServer().getPluginManager().registerEvents(new RewardItemListeners(), this);
     }
 
+=======
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
     private void registerCommand(String command, List<String> aliases, String permission, String permissionMessage, CommandExecutor executor) {
         try {
             Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
@@ -70,4 +78,12 @@ public class VoltzCrates extends JavaPlugin {
             ex.printStackTrace();
         }
     }
+<<<<<<< HEAD
+=======
+
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new PlayerGeneralListeners(), this);
+        getServer().getPluginManager().registerEvents(new RewardItemListeners(), this);
+    }
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
 }

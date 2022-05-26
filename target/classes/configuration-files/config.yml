@@ -21,7 +21,10 @@ Messages:
   offline-player: '&cEsse jogador está offline!'
   need-key: '&cVocê precisa estar segurando a chave dessa caixa!'
   need-space: '&cA abertura da caixa foi cancelada por falta de espaço no inventário!'
+<<<<<<< HEAD
   give-all: '&7Você recebeu &f{amount}x {key}&7! &8(Giveall)'
+=======
+>>>>>>> 3b71325d45999be59b70484b7c31cb0745c4ba98
 
 Titles:
   reward:
